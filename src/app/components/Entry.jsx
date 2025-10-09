@@ -1,11 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import React, { useEffect, useState } from "react";
+
+import { app } from "../firebase";
+import { getDatabase, ref, push, set } from "firebase/database";
 
 import copyIcon from "../../../public/copy.png";
 
 const Entry = () => {
+  const db = getDatabase(app);
   const [data, setData] = useState([
     {
       message: "",
@@ -25,12 +29,25 @@ const Entry = () => {
       const urlCode = generateRandomUrlCode();
       const currentUrl = window.location.origin;
       const uniqueUrl = currentUrl + "/view/" + urlCode;
-      setData([
-        { message: message, otp: otp, urlCode: urlCode, uniqueUrl: uniqueUrl },
-      ]);
-      setTimeout(() => {
-        setTogglePopUp(true);
-      }, 1000);
+      const dataToSave = {
+        message: message,
+        otp: otp,
+        urlCode: urlCode,
+        uniqueUrl: uniqueUrl,
+      };
+      setData(dataToSave);
+      // Push data to "messages" collection
+      const messagesRef = ref(db, "messages");
+      const newMessageRef = push(messagesRef);
+      set(newMessageRef, dataToSave)
+        .then(() => {
+          console.log("✅ Data saved successfully!");
+          alert("Saved successfully!");
+          setTogglePopUp(true);
+        })
+        .catch((error) => {
+          console.error("❌ Error saving data:", error);
+        });
     }
     setMessage("");
   };
@@ -81,9 +98,9 @@ const Entry = () => {
         }`}
       >
         <h1 className="font-bold text-3xl">Password:</h1>
-        <h1 className="font-bold text-7xl">{data[0].otp}</h1>
+        <h1 className="font-bold text-7xl">{data.otp}</h1>
         <div className="flex flex-row gap-1">
-          <p className="font-bold opacity-80 text-sm">{data[0].uniqueUrl}</p>
+          <p className="font-bold opacity-80 text-sm">{data.uniqueUrl}</p>
           <Image
             width={20}
             height={10}
