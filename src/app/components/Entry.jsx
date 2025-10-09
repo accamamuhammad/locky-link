@@ -72,9 +72,18 @@ const Entry = () => {
     return code;
   };
 
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
+  const handleCopy = (text) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        console.log("Copied:", text);
+        // Optional: Show a temporary visual confirmation
+        alert("Link copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
 
   return (
     <section className="relative w-screen h-screen px-8 bg-gradient-to-br from-purple-200 to-purple-50 flex flex-col items-center justify-center text-center">
@@ -129,6 +138,7 @@ const Entry = () => {
               height={20}
               src={copyIcon}
               alt="copy-icon"
+              onClick={() => handleCopy(data.uniqueUrl)}
               className="cursor-pointer hover:scale-110 transition-transform"
             />
           </div>
