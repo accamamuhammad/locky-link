@@ -77,46 +77,71 @@ const Entry = () => {
   // }, [data]);
 
   return (
-    <div className="bg-neutral-50 p-2 w-full h-fit mt-5 rounded-xl flex flex-col justify-between items-center shadow-2xl">
-      <textarea
-        className="w-full outline-0 h-full p-2 min-h-48 resize-none"
-        placeholder="Enter the data you want to send"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      ></textarea>
-      <button
-        onClick={handleSave}
-        className="w-full py-2.5 cursor-pointer bg-purple-600 font-bold rounded-lg text-base text-white mt-2"
-      >
-        Secure
-      </button>
-      <div
-        className={`${
-          togglePopUp
-            ? "absolute inset-0 w-screen h-screen bg-purple-50 flex gap-4 flex-col items-center justify-center"
-            : "hidden"
-        }`}
-      >
-        <h1 className="font-bold text-3xl">Password:</h1>
-        <h1 className="font-bold text-7xl">{data.otp}</h1>
-        <div className="flex flex-row gap-1">
-          <p className="font-bold opacity-80 text-sm">{data.uniqueUrl}</p>
-          <Image
-            width={20}
-            height={10}
-            src={copyIcon}
-            alt="copy-icon"
-            className="cursor-pointer"
-          />
-        </div>
-        <button
-          onClick={() => setTogglePopUp(false)}
-          className="px-3 py-2 mt-2 cursor-pointer text-sm bg-purple-500 text-white rounded-lg"
-        >
-          Save
-        </button>
+    <section className="relative w-screen h-screen px-8 bg-gradient-to-br from-purple-200 to-purple-50 flex flex-col items-center justify-center text-center">
+      {/* Header */}
+      <div className="space-y-3 mb-6">
+        <h1 className="font-light text-4xl leading-snug">
+          <span className="font-bold text-purple-600">Password Secured,</span>
+          <br />
+          Data Transmission.
+        </h1>
+        <p className="text-gray-700 opacity-80 text-sm max-w-md mx-auto">
+          Take full control of your data — password-secure links and QR codes
+          you can share safely with anyone.
+        </p>
       </div>
-    </div>
+
+      {/* Message Input Card */}
+      <div className="relative bg-white/90 backdrop-blur-md p-6 w-full max-w-md rounded-3xl flex flex-col items-center shadow-xl border border-purple-100">
+        <textarea
+          className="w-full outline-none min-h-48 p-4 rounded-xl resize-none border border-purple-100 focus:ring-2 focus:ring-purple-500 text-gray-800 text-base placeholder-gray-400"
+          placeholder="Enter the data you want to send..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        ></textarea>
+
+        <button
+          onClick={handleSave}
+          className="w-full py-3 mt-4 cursor-pointer bg-purple-500 hover:bg-purple-600 transition-all font-semibold rounded-xl text-base text-white shadow-lg"
+        >
+          Secure
+        </button>
+
+        {/* Popup Overlay */}
+        <div
+          className={`${
+            togglePopUp
+              ? "fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/95 backdrop-blur-sm"
+              : "hidden"
+          }`}
+        >
+          <h1 className="font-bold text-3xl text-purple-600 mb-2">Password</h1>
+          <h1 className="font-extrabold text-6xl text-purple-500 tracking-widest mb-4">
+            {data.otp}
+          </h1>
+
+          <div className="flex items-center gap-2 bg-purple-50 rounded-lg px-4 py-2 shadow-sm">
+            <p className="font-medium text-sm text-gray-700 truncate max-w-[220px]">
+              {data.uniqueUrl}
+            </p>
+            <Image
+              width={20}
+              height={20}
+              src={copyIcon}
+              alt="copy-icon"
+              className="cursor-pointer hover:scale-110 transition-transform"
+            />
+          </div>
+
+          <button
+            onClick={() => setTogglePopUp(false)}
+            className="px-6 py-2 mt-6 cursor-pointer text-sm bg-purple-500 text-white rounded-full font-semibold hover:bg-purple-600 shadow-lg transition-all"
+          >
+            Done
+          </button>
+        </div>
+      </div>
+    </section>
   );
 };
 

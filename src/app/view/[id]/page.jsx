@@ -85,12 +85,23 @@ export default function Page({ params }) {
       </div>
       <div
         className={
-          toggleData ? "hidden" : "w-full px-5 flex flex-col gap-5 items-center"
+          toggleData
+            ? "hidden"
+            : "w-full px-6 flex flex-col items-center justify-center gap-6 text-center"
         }
       >
-        <h1 className="font-bold text-3xl">Message</h1>
-        <div className="w-full h-fit px-4 py-8 text-lg font-medium bg-neutral-100 rounded-2xl shadow-2xl text-center">
-          {currentMessageData.message}
+        <h1 className="text-4xl font-extrabold text-purple-500 tracking-wide drop-shadow-sm">
+          Message
+        </h1>
+
+        <div className="relative w-full max-w-2xl bg-white border border-purple-100 rounded-3xl shadow-xl p-10">
+          <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-md">
+            Secured Message
+          </div>
+
+          <p className="text-gray-800 text-xl font-medium leading-relaxed whitespace-pre-line">
+            {currentMessageData.message}
+          </p>
         </div>
       </div>
     </section>
