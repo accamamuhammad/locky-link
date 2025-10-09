@@ -1,31 +1,86 @@
 "use client";
 
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { getDatabase, get, ref } from "firebase/database";
+import { app } from "../../firebase.js";
 
 export default function Page({ params }) {
-  //   console.log(params.id);
-  const [toggleData, setToggleData] = useState(false);
-  const [password, setPassword] = useState("1234");
+  const { id } = React.use(params);
+  // console.log(id);
+  const db = getDatabase(app);
+  const [data, setData] = useState([]);
+  const [currentMessageData, setCurrentMessageData] = useState({});
+  const [toggleData, setToggleData] = useState(true);
+  const [password, setPassword] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+
+  useEffect(() => {
+    const messagesRef = ref(db, "messages");
+    get(messagesRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const dataArray = Object.values(snapshot.val());
+        setData(dataArray);
+      } else {
+        console.log("error");
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    data.forEach((item) => {
+      const currentCode = item.urlCode;
+      if (id === currentCode) {
+        setPassword(item.otp);
+        setCurrentMessageData(item);
+      }
+    });
+  }, [data]);
+
+  const handlePassword = () => {
+    if (password === passwordInput) {
+      setToggleData(false);
+    } else {
+      alert("🚨 Incorrect Code");
+    }
+  };
 
   return (
     <section className="w-screen h-screen flex items-center justify-center bg-gradient-to-br from-purple-200 to-purple-50">
-      {/* Viewing message with ID: {params.id} */}
+      {/* Full-page password overlay */}
       <div
         className={`${
           toggleData
-            ? "w-fit space-y-2 flex flex-row items-center justify-center"
+            ? "fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-95"
             : "hidden"
         }`}
       >
-        <h1 className="text-purple-900 font-bold text-2xl mt-1 mr-2">Code:</h1>
-        <div className="w-44 h-10 rounded-lg bg-purple-50 p-1 flex flex-row justify-between">
-          <input
-            type="number"
-            className="w-full h-full pl-2 outline-0 rounded-l-lg"
-          />
-          <button className="px-5 h-full cursor-pointer bg-purple-500 font-medium text-white rounded-lg">
-            Enter
-          </button>
+        <div className="bg-white rounded-3xl shadow-2xl p-10 flex flex-col items-center gap-6 w-96">
+          <h1 className="text-purple-500 font-extrabold text-3xl">
+            Enter Code
+          </h1>
+          <p className="text-gray-600 text-center">
+            Please enter the 4-digit password to continue.
+          </p>
+          <div className="w-full flex items-center gap-2">
+            <input
+              type="text"
+              maxLength={4}
+              value={passwordInput}
+              onChange={(e) => {
+                const val = e.target.value.replace(/\D/g, "");
+                setPasswordInput(val);
+              }}
+              className="flex-1 h-12 px-4 rounded-l-2xl border border-purple-200 focus:ring-2 focus:ring-purple-500 outline-none text-center text-lg tracking-widest"
+              placeholder="••••"
+            />
+            <button
+              onClick={handlePassword}
+              className="h-12 px-6 bg-purple-500 text-white font-semibold rounded-r-2xl shadow-lg hover:bg-purple-600 transition-colors"
+            >
+              Enter
+            </button>
+          </div>
         </div>
       </div>
       <div
@@ -34,7 +89,9 @@ export default function Page({ params }) {
         }
       >
         <h1 className="font-bold text-3xl">Message</h1>
-        <div className="w-full h-48 bg-neutral-100 rounded-2xl shadow-2xl"></div>
+        <div className="w-full h-fit px-4 py-8 text-lg font-medium bg-neutral-100 rounded-2xl shadow-2xl text-center">
+          {currentMessageData.message}
+        </div>
       </div>
     </section>
   );

@@ -72,9 +72,9 @@ const Entry = () => {
     return code;
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
 
   return (
     <div className="bg-neutral-50 p-2 w-full h-fit mt-5 rounded-xl flex flex-col justify-between items-center shadow-2xl">
