@@ -1,9 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+
+import copyIcon from "../../../public/copy.png";
 
 const Entry = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([
+    {
+      message: "",
+      otp: "",
+      urlCode: "",
+      uniqueUrl: "",
+    },
+  ]);
   const [message, setMessage] = useState("");
   const [togglePopUp, setTogglePopUp] = useState(false);
 
@@ -15,7 +25,12 @@ const Entry = () => {
       const urlCode = generateRandomUrlCode();
       const currentUrl = window.location.origin;
       const uniqueUrl = currentUrl + "/view/" + urlCode;
-      setData([{ message, otp, urlCode, uniqueUrl }]);
+      setData([
+        { message: message, otp: otp, urlCode: urlCode, uniqueUrl: uniqueUrl },
+      ]);
+      setTimeout(() => {
+        setTogglePopUp(true);
+      }, 1000);
     }
     setMessage("");
   };
@@ -58,6 +73,32 @@ const Entry = () => {
       >
         Secure
       </button>
+      <div
+        className={`${
+          togglePopUp
+            ? "absolute inset-0 w-screen h-screen bg-purple-50 flex gap-4 flex-col items-center justify-center"
+            : "hidden"
+        }`}
+      >
+        <h1 className="font-bold text-3xl">Password:</h1>
+        <h1 className="font-bold text-7xl">{data[0].otp}</h1>
+        <div className="flex flex-row gap-1">
+          <p className="font-bold opacity-80 text-sm">{data[0].uniqueUrl}</p>
+          <Image
+            width={20}
+            height={10}
+            src={copyIcon}
+            alt="copy-icon"
+            className="cursor-pointer"
+          />
+        </div>
+        <button
+          onClick={() => setTogglePopUp(false)}
+          className="px-3 py-2 mt-2 cursor-pointer text-sm bg-purple-500 text-white rounded-lg"
+        >
+          Save
+        </button>
+      </div>
     </div>
   );
 };
