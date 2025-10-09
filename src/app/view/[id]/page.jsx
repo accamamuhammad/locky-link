@@ -51,18 +51,18 @@ export default function Page({ params }) {
       <div
         className={`${
           toggleData
-            ? "fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-95"
+            ? "px-2 fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-95"
             : "hidden"
         }`}
       >
-        <div className="bg-white rounded-3xl shadow-2xl p-10 flex flex-col items-center gap-6 w-96">
+        <div className="w-full sm:w-96 bg-white rounded-3xl shadow-2xl p-5 md:p-10 flex flex-col items-center gap-6">
           <h1 className="text-purple-500 font-extrabold text-3xl">
             Enter Code
           </h1>
           <p className="text-gray-600 text-center">
             Please enter the 4-digit password to continue.
           </p>
-          <div className="w-full flex items-center gap-2">
+          <div className="w-fit flex items-center gap-2">
             <input
               type="text"
               maxLength={4}
@@ -71,12 +71,12 @@ export default function Page({ params }) {
                 const val = e.target.value.replace(/\D/g, "");
                 setPasswordInput(val);
               }}
-              className="flex-1 h-12 px-4 rounded-l-2xl border border-purple-200 focus:ring-2 focus:ring-purple-500 outline-none text-center text-lg tracking-widest"
+              className="flex-1 h-12 md:px-4 px-2 rounded-l-2xl border border-purple-200 focus:ring-2 focus:ring-purple-500 outline-none text-center text-lg tracking-widest"
               placeholder="••••"
             />
             <button
               onClick={handlePassword}
-              className="h-12 px-6 bg-purple-500 text-white font-semibold rounded-r-2xl shadow-lg hover:bg-purple-600 transition-colors"
+              className="h-12 px-3 md:px-6 bg-purple-500 text-white font-semibold rounded-r-2xl shadow-lg hover:bg-purple-600 transition-colors"
             >
               Enter
             </button>
