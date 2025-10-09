@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 const Entry = () => {
   const [data, setData] = useState([]);
   const [message, setMessage] = useState("");
+  const [togglePopUp, setTogglePopUp] = useState(false);
 
   const handleSave = () => {
     if (message === "") {
