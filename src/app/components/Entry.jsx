@@ -86,7 +86,7 @@ const Entry = () => {
   };
 
   return (
-    <section className="relative w-screen h-screen px-8 bg-gradient-to-br from-purple-200 to-purple-50 flex flex-col items-center justify-center text-center">
+    <section className="relative w-screen h-screen px-6 bg-gradient-to-br from-purple-200 to-purple-50 flex flex-col items-center justify-center text-center">
       {/* Header */}
       <div className="space-y-3 mb-6">
         <h1 className="font-light text-4xl leading-snug">
@@ -120,7 +120,7 @@ const Entry = () => {
         <div
           className={`${
             togglePopUp
-              ? "fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/95 backdrop-blur-sm"
+              ? "w-full fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/95 backdrop-blur-sm"
               : "hidden"
           }`}
         >
@@ -130,7 +130,7 @@ const Entry = () => {
           </h1>
 
           <div className="flex items-center gap-2 bg-purple-50 rounded-lg px-4 py-2 shadow-sm">
-            <p className="font-medium text-sm text-gray-700 truncate max-w-[220px]">
+            <p className="w-full font-medium text-sm text-gray-700 truncate max-w-[220px]">
               {data.uniqueUrl}
             </p>
             <Image
@@ -139,7 +139,7 @@ const Entry = () => {
               src={copyIcon}
               alt="copy-icon"
               onClick={() => handleCopy(data.uniqueUrl)}
-              className="cursor-pointer hover:scale-110 transition-transform"
+              className="z-50 cursor-pointer hover:scale-110 transition-transform"
             />
           </div>
 
