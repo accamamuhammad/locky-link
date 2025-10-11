@@ -86,7 +86,7 @@ const Entry = () => {
   };
 
   return (
-    <section className="relative w-screen h-screen px-6 bg-gradient-to-br from-purple-200 to-purple-50 flex flex-col items-center justify-center text-center">
+    <section className="relative w-screen min-h-screen h-fit px-6 white flex flex-col items-center justify-center text-center">
       {/* Header */}
       <div className="space-y-3 mb-6">
         <h1 className="font-light text-4xl leading-snug">
@@ -120,7 +120,7 @@ const Entry = () => {
         <div
           className={`${
             togglePopUp
-              ? "w-full fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/95 backdrop-blur-sm"
+              ? "w-full h-fit py-5 rounded-lg fixed inset-0 z-50 flex flex-col items-center justify-between bg-white/95 backdrop-blur-sm"
               : "hidden"
           }`}
         >
@@ -133,22 +133,27 @@ const Entry = () => {
             <p className="w-full font-medium text-sm text-gray-700 truncate max-w-[220px]">
               {data.uniqueUrl}
             </p>
-            <Image
-              width={20}
-              height={20}
-              src={copyIcon}
-              alt="copy-icon"
-              onClick={() => handleCopy(data.uniqueUrl)}
-              className="z-50 cursor-pointer hover:scale-110 transition-transform"
-            />
           </div>
-
-          <button
-            onClick={() => setTogglePopUp(false)}
-            className="px-6 py-2 mt-6 cursor-pointer text-sm bg-purple-500 text-white rounded-full font-semibold hover:bg-purple-600 shadow-lg transition-all"
-          >
-            Done
-          </button>
+          <div className="w-full px-5">
+            <button
+              onClick={() => handleCopy(data.uniqueUrl)}
+              className="w-full border py-2 mt-6 cursor-pointer text-sm bg-purple-500 text-white rounded-full font-semibold hover:bg-purple-600 shadow-lg transition-all"
+            >
+              Copy Link
+            </button>
+            <button
+              onClick={() => handleCopy(data.otp)}
+              className="w-full border py-2 mt-6 cursor-pointer text-sm bg-purple-500 text-white rounded-full font-semibold hover:bg-purple-600 shadow-lg transition-all"
+            >
+              Copy OTP
+            </button>
+            <button
+              onClick={() => setTogglePopUp(false)}
+              className="w-full px-6 py-2 mt-6 cursor-pointer text-sm bg-purple-500 text-white rounded-full font-semibold hover:bg-purple-600 shadow-lg transition-all"
+            >
+              Done
+            </button>
+          </div>
         </div>
       </div>
     </section>
